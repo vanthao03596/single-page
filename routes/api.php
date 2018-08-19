@@ -20,8 +20,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         return $request->user();
     });
 
+
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    Route::group(['namespace' => 'Api'], function(){
+        Route::get('conversations', 'ConversationController@index');
+    });
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -33,3 +38,5 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
+
+

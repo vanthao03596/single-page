@@ -30,5 +30,9 @@
   "password_updated": "Cập nhật mật khẩu thành công!",
   "new_password": "Mật khẩu mới",
   "login_with": "Đăng nhập với",
-  "register_with": "Đăng ký với"
+  "register_with": "Đăng ký với",
+  "all_conversations" : "Tất cả liên lạc",
+  "you_and" : "Bạn và",
+  "other" : "người khác",
+  "last_reply" : "Tin nhắn cuối cùng"
   }

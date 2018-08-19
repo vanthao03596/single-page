@@ -6,6 +6,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
+use App\Models\Conversation;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -83,5 +84,20 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function conversations()
+    {
+        return $this->belongsToMany(Conversation::class)->whereNull('parent_id')->orderBy('last_reply', 'desc');
+    }
+
+    public function isInConversation(Conversation $conversation)
+    {
+        return $this->conversations->contains($conversation);
+    }
+
+    public function avatar($size = 45)
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '?s=' . $size . '&d=mm';
     }
 }
