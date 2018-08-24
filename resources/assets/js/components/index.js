@@ -4,7 +4,10 @@ import Child from './Child'
 import Button from './Button'
 import Checkbox from './Checkbox'
 import ConversationDashboard from './ConversationDashboard'
+import Conversations from './Conversations'
 import Conversation from './Conversation'
+import ReplyForm from './ReplyForm'
+import AddConversation from './Addconversation'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -17,7 +20,10 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   AlertError,
   AlertSuccess,
   ConversationDashboard,
-  Conversation
+  Conversations,
+  Conversation,
+  ReplyForm,
+  AddConversation
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Carbon\Carbon;
 
 class SetLocale
 {
@@ -17,6 +18,7 @@ class SetLocale
     {
         if ($locale = $this->parseLocale($request)) {
             app()->setLocale($locale);
+            Carbon::setLocale($locale);
         }
 
         return $next($request);

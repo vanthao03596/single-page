@@ -1,34 +1,39 @@
-import axios from 'axios'
 import api from '../api/all.js'
 export const state = {
-    conversations: [],
-    loadingConversations: false
+  conversations: [],
+  loadingConversations: true
 }
 
 export const getters = {
-  allConversations : state => {
+  allConversations: state => {
     return state.conversations
   },
   loadingConversations: state => {
-      return state.loadingConversations
+    return state.loadingConversations
   }
-
 }
 
 export const mutations = {
-  setConversations(state, conversations) {
+  setConversations (state, conversations) {
     state.conversations = conversations
+  },
+  setConversationsLoading (state, status) {
+    state.loadingConversations = status
+  },
+  changeTopConversations (state, conversation) {
+    state.conversations = state.conversations.filter((item) => {
+      return item.id !== conversation.id
+    })
+    state.conversations.unshift(conversation)
   }
 }
 
 export const actions = {
   getConversations ({ commit, dispatch }, payload) {
-    api.getConversations(1).then((response) => {
+    commit('setConversationsLoading', true)
+    api.getConversations(1).then(response => {
       commit('setConversations', response.data.data)
+      commit('setConversationsLoading', false)
     })
   }
 }
-
-
-
-

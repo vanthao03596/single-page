@@ -1,50 +1,50 @@
 <template>
-  <card :title="$t('all_conversations')">
-    <div class="media" v-for="conversation in conversations">
-      <div class="media-body">
-        <a href="">{{ conversation.body }}</a>
-        <p class="text-muted">
-         {{ $t('you_and') }} {{ conversation.participant_count }} {{ $t('other') }}
-        </p>
-        <ul class="list-inline">
-          <li>
-            <img :src="user.avatar" v-for="user in conversation.users.data" :alt="user.name" :title="user.name">
-          </li>
-          <li>{{ $t('last_reply') }} {{ conversation.last_reply_human }}</li>
-        </ul>
-
-      </div>
+    <div v-if="loading">
+        <div class="loader">
+        </div>
     </div>
-  </card>
+    <div v-else-if="conversation">
+        <ul class="list-inline" v-if="conversation.users.data.length">
+            <li class="list-inline-item"><strong>In conversation:</strong></li>
+            <li class="list-inline-item" v-for="user in conversation.users.data" :key="user.id">{{ user.name }}</li>
+        </ul>
+        <hr>
+        <div class="media mb-5" v-for="reply in conversation.replies.data" :key="reply.id">
+            <img class="mr-3" :src="reply.user.data.avatar" alt="reply.user.data.name">
+            <div class="media-body">
+                <p class="mb-1">{{ reply.user.data.name }} &bull; {{ reply.created_at_human }}</p>
+                <card>
+                    {{ reply.body }}
+                </card>
+            </div>
+        </div>
+
+        <div class="media mb-5">
+            <img class="mr-3" :src="conversation.user.data.avatar" alt="conversation.user.data.name">
+            <div class="media-body">
+                <p class="mb-1">{{ conversation.user.data.name }} &bull; {{ conversation.created_at_human }}</p>
+                <card>
+                    {{ conversation.body }}
+                </card>
+            </div>
+        </div>
+    </div>
+    <div v-else>Select Conversation</div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  computed : {
-    ...mapGetters('conversations',{
-      conversations : 'allConversations'
+    name: 'Conversation',
+    computed : {
+    ...mapGetters('conversation',{
+      conversation : 'currentConversation',
+      loading : 'loadingConversation'
     })
   },
-  methods : {
-    ...mapActions('conversations',{
-      getConversations : 'getConversations'
-    }
-    )
-  },
-  mounted() {
-    this.getConversations(1)
-  },
-  name: 'Conversation',
-
-  data () {
-    return {
-
-    }
-  },
-
 }
 </script>
 
-<style lang="css" scoped>
+<style>
+
 </style>

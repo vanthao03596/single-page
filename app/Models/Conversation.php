@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
+    protected $fillable = ['parent_id', 'user_id', 'body', 'last_reply'];
     protected $dates = ['last_reply'];
 
     public function user()
@@ -26,7 +27,7 @@ class Conversation extends Model
 
     public function replies()
     {
-        return $this->hasMany(Conversation::class, 'parent_id')->latestFirst();
+        return $this->hasMany(Conversation::class, 'parent_id')->latest();
     }
 
     public function parent()

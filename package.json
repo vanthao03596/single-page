@@ -16,11 +16,12 @@
     "@fortawesome/fontawesome-free-regular": "^5.0.12",
     "@fortawesome/fontawesome-free-solid": "^5.0.12",
     "@fortawesome/vue-fontawesome": "^0.0.22",
+    "algoliasearch": "^3.30.0",
+    "autocomplete.js": "^0.31.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
-    "npm": "^6.4.0",
     "popper.js": "^1.14.3",
     "sweetalert2": "^7.19.3",
     "vform": "^1.0.0",
@@ -39,7 +40,6 @@
     "cross-env": "^5.1.5",
     "laravel-mix": "^2.1.11",
     "vue-template-compiler": "^2.5.16",
-    "webpack-bundle-analyzer": "^2.11.2",
-    "webpack-cli": "^3.1.0"
+    "webpack-bundle-analyzer": "^2.11.2"
   }
 }

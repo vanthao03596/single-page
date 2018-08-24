@@ -9,6 +9,8 @@ const Home = () => import('~/pages/home').then(m => m.default || m)
 const Settings = () => import('~/pages/settings/index').then(m => m.default || m)
 const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
+const Conversation = () => import('~/pages/conversations/index').then(m => m.default || m)
+const ConversationShow = () => import('~/pages/conversations/conversation').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
@@ -19,13 +21,23 @@ export default [
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
   { path: '/home', name: 'home', component: Home },
-  { path: '/settings',
+  {
+    path: '/conversations',
+    name: 'conversation.index',
+    component: Conversation,
+    children: [
+      { path: ':id', name: 'conversation.show', component: ConversationShow }
+    ]
+  },
+  {
+    path: '/settings',
     component: Settings,
     children: [
       { path: '', redirect: { name: 'settings.profile' } },
       { path: 'profile', name: 'settings.profile', component: SettingsProfile },
       { path: 'password', name: 'settings.password', component: SettingsPassword }
-    ] },
+    ]
+  },
 
   { path: '*', component: NotFound }
 ]
