@@ -16,7 +16,7 @@
         <div class="media mb-5" v-for="reply in conversation.replies.data" :key="reply.id">
             <img class="mr-3" :src="reply.user.data.avatar" alt="reply.user.data.name">
             <div class="media-body">
-                <p class="mb-1">{{ reply.user.data.name }} &bull; {{ reply.created_at_human }}</p>
+                <p class="mb-1">{{ reply.user.data.name }} &bull; {{ reply.created_at_human.date | ago }}</p>
                 <card>
                     {{ reply.body }}
                 </card>
@@ -26,17 +26,18 @@
         <div class="media mb-5">
             <img class="mr-3" :src="conversation.user.data.avatar" alt="conversation.user.data.name">
             <div class="media-body">
-                <p class="mb-1">{{ conversation.user.data.name }} &bull; {{ conversation.created_at_human }}</p>
+                <p class="mb-1">{{ conversation.user.data.name }} &bull; {{ conversation.created_at_human.date | ago }}</p>
                 <card>
                     {{ conversation.body }}
                 </card>
-            </div>
+            </div>  
         </div>
     </div>
     <div v-else>Select Conversation</div>
 </template>
 
 <script>
+import moment from 'moment'
 import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'Conversation',
@@ -44,6 +45,9 @@ export default {
     ...mapGetters('conversation',{
       conversation : 'currentConversation',
       loading : 'loadingConversation'
+    }),
+    ...mapGetters('lang', {
+        locale : 'locale'
     })
     },
     methods : {
@@ -57,7 +61,18 @@ export default {
     watch: {
         '$route.params.id': function (id) {
             this.getConversation(id)
+        },
+        'locale': function (value) {
+            moment.locale(value)
         }
+    },
+    filters: {
+        ago (date) {
+            return moment(date).fromNow()
+        }
+    },
+    mounted () {
+        moment.locale(this.locale)
     }
 }
 </script>

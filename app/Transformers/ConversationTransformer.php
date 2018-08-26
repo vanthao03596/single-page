@@ -14,7 +14,7 @@ class ConversationTransformer extends \League\Fractal\TransformerAbstract
             'id' => $conversation->id,
             'parent_id' => $conversation->parent ? $conversation->parent->id : null,
             'body' => $conversation->body,
-            'created_at_human' => $conversation->created_at->diffForHumans(),
+            'created_at_human' => $conversation->created_at,
             'last_reply_human' => $conversation->last_reply ? $conversation->last_reply->diffForHumans() : null,
             'participant_count' => $conversation->usersExceptCurrentlyAuthenticated->count(),
         ];

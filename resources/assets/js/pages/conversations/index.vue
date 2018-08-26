@@ -6,7 +6,7 @@
         <conversations></conversations>
       </div>
       <div class="col-sm-7">
-          <transition name="fade" mode="out-in">
+          <transition name="page" mode="out-in">
             <router-view></router-view>
           </transition>
       </div>
