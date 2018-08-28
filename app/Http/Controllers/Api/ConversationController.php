@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Transformers\ConversationTransformer;
 use App\Models\Conversation;
 use App\Http\Requests\StoreConversationRequest;
+use App\Events\ConversationCreated;
 
 class ConversationController extends Controller
 {
@@ -38,14 +39,16 @@ class ConversationController extends Controller
         $data['user_id'] = $request->user()->id;
         $conversation = Conversation::create($data);
         $conversation->touchLastReply();
-        
+
         $conversation->users()->sync(
-        
+
             array_unique(
             array_merge($request->contacts, [$request->user()->id])
-        
+
         )
         );
+        $conversation->load('users');
+        broadcast(new ConversationCreated($conversation))->toOthers();
 
         return fractal()
             ->item($conversation)

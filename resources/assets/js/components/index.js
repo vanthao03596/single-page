@@ -8,10 +8,11 @@ import Conversations from './Conversations'
 import Conversation from './Conversation'
 import ReplyForm from './ReplyForm'
 import AddConversation from './Addconversation'
+import AddUser from './AddUser.vue'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
-[
+  ;[
   Card,
   Child,
   Button,
@@ -23,7 +24,8 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   Conversations,
   Conversation,
   ReplyForm,
-  AddConversation
+  AddConversation,
+  AddUser
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

@@ -6,7 +6,7 @@ import App from '~/components/App'
 
 import '~/plugins'
 import '~/components'
-
+require('./bootstrap')
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

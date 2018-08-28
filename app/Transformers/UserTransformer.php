@@ -13,7 +13,7 @@ class UserTransformer extends \League\Fractal\TransformerAbstract
         return [
             'id' => $user->id,
             'name' => $user->name,
-            'avatar' => $user->avatar($scope === 'users' || $scope == 'parent.users' ? 25 : 45),
+            'avatar' => $user->name == 'thaopv' ? asset('img/admin.jpeg') : $user->avatar($scope === 'users' || $scope == 'parent.users' ? 25 : 45),
         ];
     }
 }

@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('conversations/{conversation}', 'ConversationController@show');
         Route::post('conversations', 'ConversationController@store');
         Route::post('conversations/{conversation}/reply', 'ReplyController@store');
+        Route::post('conversations/{conversation}/user', 'ConversationUserController@store');
         Route::post('users/{user}/avatars', 'UserController@store');
     });
 });

@@ -19,7 +19,7 @@
                 <button type="submit" class="btn btn-primary">Send</button>
             </div>
         </form>
-        
+
     </card>
 </template>
 
@@ -27,68 +27,65 @@
 import { mapActions, mapGetters } from 'vuex'
 import { userautocomplete } from '../helplers/autocomplete.js'
 export default {
-    name : 'AddConversation',
-    data() {
-        return {
-            body : null,
-            contacts : []
-        }
-    },
-    methods : {
-        addContact (contact) {
-            var existing = this.contacts.filter((item) => {
-                return item.id === contact.id 
-            })
-            if(existing.length)
-            {
-                return
-            }
-            this.contacts.push(contact)
-        },
-        removeContact (contact) {
-            this.contacts = this.contacts.filter((item) => {
-                return contact.id !== item.id
-            })
-        },
-        ...mapActions('conversation', {
-            createConversation: 'createConversation'
-        }),
-        send() {
-            var id = this.contacts.map((item) => {
-                    return item.id
-            })
-            this.createConversation({
-                contacts : id,
-                body : this.body
-            }).then((response) => {
-                this.contacts = []
-                this.body = null
-                
-            })
-        }
-        
-    },
-    computed: {
-        ...mapGetters('conversation',{
-        conversation : 'currentConversation',
-        })
-    },
-    watch: {
-        conversation(val) {
-            this.$router.push({
-                name: 'conversation.show', 
-                params: { id: val.id }
-            });
-        }
-    },
-    mounted() {
-        var users = userautocomplete('#users').on('autocomplete:selected', (e, selection) => {
-            this.addContact(selection)
-            users.autocomplete.setVal('')
-        })
+  name: 'AddConversation',
+  data() {
+    return {
+      body: null,
+      contacts: []
     }
-
+  },
+  methods: {
+    addContact(contact) {
+      var existing = this.contacts.filter(item => {
+        return item.id === contact.id
+      })
+      if (existing.length) {
+        return
+      }
+      this.contacts.push(contact)
+    },
+    removeContact(contact) {
+      this.contacts = this.contacts.filter(item => {
+        return contact.id !== item.id
+      })
+    },
+    ...mapActions('conversation', {
+      createConversation: 'createConversation'
+    }),
+    send() {
+      var id = this.contacts.map(item => {
+        return item.id
+      })
+      this.createConversation({
+        contacts: id,
+        body: this.body
+      }).then(response => {
+        this.contacts = []
+        this.body = null
+      })
+    }
+  },
+  computed: {
+    ...mapGetters('conversation', {
+      conversation: 'currentConversation'
+    })
+  },
+  watch: {
+    conversation(val) {
+      this.$router.push({
+        name: 'conversation.show',
+        params: { id: val.id }
+      })
+    }
+  },
+  mounted() {
+    var users = userautocomplete('#users').on(
+      'autocomplete:selected',
+      (e, selection) => {
+        this.addContact(selection)
+        users.autocomplete.setVal('')
+      }
+    )
+  }
 }
 </script>
-
-=

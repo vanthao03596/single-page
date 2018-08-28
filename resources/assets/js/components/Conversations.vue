@@ -11,9 +11,11 @@
         </p>
         <ul class="list-inline">
           <li>
-            <img :src="user.avatar" v-for="user in conversation.users.data" :key="user.id" :alt="user.name" :title="user.name">
+            <a href="#" :title="user.name" v-for="user in conversation.users.data" :key="user.id" >
+              <img class="pr-1" :src="user.avatar" :alt="user.name">
+            </a>
           </li>
-          <li>{{ $t('last_reply') }} {{ conversation.last_reply_human }}</li>
+          <li>{{ $t('last_reply') }} {{ conversation.last_reply_human | ago(locale) }}</li>
         </ul>
       </div>
     </div>
@@ -22,35 +24,39 @@
 </template>
 
 <script>
+import { ago } from '../helplers/filters'
 import trunc from '../helplers/trunc'
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  computed : {
-    ...mapGetters('conversations',{
-      conversations : 'allConversations',
-      loading : 'loadingConversations'
+  computed: {
+    ...mapGetters('conversations', {
+      conversations: 'allConversations',
+      loading: 'loadingConversations'
     }),
+    ...mapGetters('lang', {
+      locale: 'locale'
+    })
   },
-  methods : {
-    ...mapActions('conversations',{
-      getConversations : 'getConversations'
+  methods: {
+    ...mapActions('conversations', {
+      getConversations: 'getConversations'
     }),
-    ...mapActions('conversation',{
-      getConversation : 'getConversation'
+    ...mapActions('conversation', {
+      getConversation: 'getConversation'
     }),
     trunc
   },
   mounted() {
     this.getConversations(1)
   },
+  filters: {
+    ago
+  },
   name: 'Conversations',
 
-  data () {
-    return {
-
-    }
-  },
-
+  data() {
+    return {}
+  }
 }
 </script>
 
